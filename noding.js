@@ -27,7 +27,8 @@ var cachePrototype = {
   humidity: 0,
   currentPrecip: 0,
   sixHourForecast: [],
-  season: 0
+  season: 0,
+  day: 0
 }
 
 app.param('latitude', function (req, res, next, value) {
@@ -49,7 +50,7 @@ app.get('/weather/:latitude/:longitude/requestData', function(req, res) {
 
     if (Math.sqrt((cache[i].lati-latitude)*(cache[i].lati-latitude)+(cache[i].long
       -longitude)*(cache[i].long-longitude)) <= 0.01 &&
-      ((new Date().getTime()) - cache[i].serverTimeRecorded.getTime())/6000 < 1) {
+      ((new Date().getTime()) - cache[i].serverTimeRecorded.getTime())/900000 < 1) {
 
       existingData = true;
       x = cache[i];
@@ -57,7 +58,7 @@ app.get('/weather/:latitude/:longitude/requestData', function(req, res) {
 
     } else if (Math.sqrt((cache[i].lati-latitude)*(cache[i].lati-latitude)-(cache[i].long
       -longitude)*(cache[i].long-longitude)) <= 0.01 &&
-    !(((new Date().getTime()) - cache[i].serverTimeRecorded.getTime())/6000 < 1)) {
+    !(((new Date().getTime()) - cache[i].serverTimeRecorded.getTime())/900000 < 1)) {
 
       existingData = true;
 
